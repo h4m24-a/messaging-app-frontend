@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
 }); // reads from localStorage right at initialization 
 
 
-
+console.log(accessToken)
   const login = async (token) => { // function is called when a user logs in successfully
     setAccessToken(token); // saving token in state, to use in future requests
     localStorage.setItem("isAuthenticated", "true");    // The first time user logs in, the isAuthenticated entry is created.
@@ -90,11 +90,11 @@ export const AuthProvider = ({ children }) => {
     if (!isAuthenticated) return;
     if (!accessToken) return;
     
-    const getUserProfile = async () => {
+    const getUserData = async () => {
       setLoading(true)
       
       try {
-        const response = await fetch("http://localhost:3000/api/auth/user", {
+        const response = await fetch("http://localhost:3000/api/auth/userData", {
           method: 'GET',
           credentials: "include",
           headers: {
@@ -123,9 +123,9 @@ export const AuthProvider = ({ children }) => {
       }
     
     }
-    getUserProfile();
+    getUserData();
     
-
+    
   }, [accessToken, isAuthenticated]);
 
 
@@ -146,14 +146,6 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-
-
-
-
-
-
-
 
 
 

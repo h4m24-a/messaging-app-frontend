@@ -93,7 +93,7 @@ const SignupPage = () => {
   <>
   <div className="auth-page">
     <div className="auth-card">
-      <i className="fa-solid fa-blog auth-logo"></i>
+      <i className="fa-solid fa-message auth-logo"></i>
 
       <h1>Create Account</h1>
 

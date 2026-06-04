@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+
+
+@theme {
+   --font-poppins: "Poppins", sans-serif;
+   --font-inter: "Inter", sans-serif;
+   --font-openSans: "Open Sans", sans-serif;
+   --font-rubik: "Rubik", sans-serif;
+   --font-quicksand: "Quicksand", sans-serif;
+   --font-roboto: "Roboto", sans-serif;
+   --font-PlusJakarta: "Plus Jakarta Sans", sans-serif;
+}

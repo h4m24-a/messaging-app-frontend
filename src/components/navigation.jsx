@@ -1,33 +1,53 @@
 import { useAuthContext } from "../context/useAuthContext";
 
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ');
+}
+
 export default function Navigation() {
 
-  const { logout, loggedInUser,  } = useAuthContext(); // Authentication context
+  
+
+  const navigation = [
+  { name: ' Chats', icon:<i className="fa-solid fa-comment fa-lg mr-2"></i>,  href: '/', current: true },
+  { name: ' Profile', icon:<i class="fa-solid fa-circle-user fa-lg mr-2"></i>,  href: '/profile', current: false },
+]
+
+  const { logout, loggedInUser, profileImage  } = useAuthContext(); // Authentication context
 
 
   return (
     <aside className="flex w-35 flex-col justify-between border-r border-slate-300 bg-stone-50 py-8">
       <div>
-        <p className="block px-4 py-2 text-center font-bold text-black">{loggedInUser}</p>
+        <p className="block px-4 py-2 capitalize text-center font-bold text-black">{loggedInUser}</p>
         <div className="mb-12 flex justify-center">
           <div className="relative">
             <img
-              src="/avatar.jpg"
-              alt=""
+              src={profileImage}
+              alt="User Profile Image"
               className="h-14 w-14 rounded-full"
             />
             <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-500 border-2 border-white" />
           </div>
         </div>
 
-        <nav className="space-y-3 px-3">
-          <button className="flex w-full items-center gap-3 rounded-xl bg-purple-100 px-4 py-4 text-purple-600">
-            💬 Chats
-          </button>
 
-          <button className="flex w-full items-center gap-3 rounded-xl px-4 py-4 hover:bg-gray-100">
-            👥 People
-          </button>
+        <nav className="space-y-2 flex flex-col items-center rounded-xl active:bg-purple-100 px-4 py-4 active:text-blue-600 ">
+          {navigation.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    aria-current={item.current ? 'page' : undefined}
+                    className={classNames(
+                      item.current ? 'bg-blue-600 text-md text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-blue-600 text-md',
+                      'rounded-md px-3 py-2 text-md font-medium'
+                    )}
+                  >
+                    {item.icon}
+                    {item.name}
+                  </a>
+                ))}
+
 
         </nav>
       </div>
@@ -50,3 +70,4 @@ export default function Navigation() {
     </aside>
   );
 }
+

@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] =  useState(false);
+  const [profileImage, setProfileImage] = useState("")
   const [isAuthenticated, setIsAuthenticated] = useState(() => {  // lazy initialization using the useState hook.
   return localStorage.getItem("isAuthenticated");   
 }); // reads from localStorage right at initialization 
@@ -116,6 +117,7 @@ console.log(accessToken)
         
         setUserId(data.id);
         setLoggedInUser(data.username);
+        setProfileImage(data.profile_image)
         setLoading(false)
         
       } catch (error) {
@@ -140,7 +142,7 @@ console.log(accessToken)
 
 
   return (
-    <AuthContext.Provider value={{ accessToken, isAuthenticated, userId, loggedInUser, loading, login, logout, error }}
+    <AuthContext.Provider value={{ accessToken, isAuthenticated, userId, loggedInUser, loading, login, logout, error, profileImage }}
     >
       {children}
     </AuthContext.Provider>

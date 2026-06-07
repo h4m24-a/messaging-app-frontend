@@ -10,7 +10,7 @@ export default function Navigation() {
 
   const navigation = [
   { name: ' Chats', icon:<i className="fa-solid fa-comment fa-lg mr-2"></i>,  href: '/', current: true },
-  { name: ' Profile', icon:<i class="fa-solid fa-circle-user fa-lg mr-2"></i>,  href: '/profile', current: false },
+  { name: ' Profile', icon:<i className="fa-solid fa-circle-user fa-lg mr-2"></i>,  href: '/profile', current: false },
 ]
 
   const { logout, loggedInUser, profileImage  } = useAuthContext(); // Authentication context
@@ -22,11 +22,13 @@ export default function Navigation() {
         <p className="block px-4 py-2 capitalize text-center font-bold text-black">{loggedInUser}</p>
         <div className="mb-12 flex justify-center">
           <div className="relative">
-            <img
-              src={profileImage}
-              alt="User Profile Image"
-              className="h-14 w-14 rounded-full"
-            />
+            {profileImage && (
+              <img
+                src={profileImage}
+                alt="User Profile Image"
+                className="h-14 w-14 rounded-full"
+              />
+            )}
             <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-500 border-2 border-white" />
           </div>
         </div>

@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import getConversationList from "../services/conversationList";
 import { useAuthContext } from "../context/useAuthContext";
-import { Link } from "react-router";
 
 
-export default function ConversationList() {
+
+export default function ConversationList({onSelectConversation, activeId}) {
 
   const { accessToken, userId } = useAuthContext();
 
@@ -63,16 +63,15 @@ export default function ConversationList() {
        : conversation.user1;
         
         return (
-        <Link key={conversation.id} to={`/${conversation.id}`}>
           <ConversationCard
             key={conversation.id}
             name={otherUser.username}
             profileImage={otherUser.profile_image}
             user={conversation.messages?.[0]?.sender?.username}
             lastText={conversation.messages?.[0]?.text ?? "No messages yet"}
-            active={true}
+            onClick={ ()=> onSelectConversation(conversation.id)}
+            active={activeId === conversation.id}
           />
-        </Link>
       );
     })}
 
@@ -84,9 +83,10 @@ export default function ConversationList() {
   );
 }
 
-function ConversationCard({ active, name, user, profileImage, lastText }) {
+function ConversationCard({ active, name, user, profileImage, lastText, onClick }) {
   return (
     <div
+    onClick={onClick}
     className={`flex cursor-pointer items-center justify-between rounded-2xl p-4 transition ${
       active
       ? "bg-green-100"

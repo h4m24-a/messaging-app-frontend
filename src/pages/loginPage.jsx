@@ -33,7 +33,8 @@ const LoginPage = () => {
 
       // if user & password are incorrect, set the error message
       if (response.status === 401) {
-        setError(data.message)
+        setError(data.error)
+        console.log(data.error)
         setSuccess("")
         return;
       }

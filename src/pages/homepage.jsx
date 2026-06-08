@@ -1,7 +1,7 @@
 import Navigation from "../components/navigation";
 import ConversationList from "../components/conversationList";
 import ChatWindow from "../components/chatWindow";
-import NewConversationModal from "../components/NewConversationModal";
+import CreateConversationModal from "../components/createConversationModal";
 import { useState } from "react";
 
 export default function Homepage() {
@@ -21,7 +21,7 @@ export default function Homepage() {
       </div>
 
       <div className="ml-8">
-        <NewConversationModal />
+        <CreateConversationModal />
       </div>
     </div>
   );

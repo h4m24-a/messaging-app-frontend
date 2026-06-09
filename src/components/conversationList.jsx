@@ -22,7 +22,7 @@ export default function ConversationList({onSelectConversation, activeId}) {
     return <div>Loading conversations...</div>;
   }
 
- 
+
 
 
   if (isError) {
@@ -50,18 +50,18 @@ export default function ConversationList({onSelectConversation, activeId}) {
 
       <div className="space-y-3">
 
-        {data?.conversations.length === 0 &&  ( 
+        {data?.conversations.length === 0 &&  (
           <p className=" text-xl text-center mt-6 text-red-500 font-mono">No conversations are found!</p>
         )}
 
 
      {data?.conversations.map((conversation) => {
-       
+
        const otherUser =
        conversation.user1.id === userId
        ? conversation.user2
        : conversation.user1;
-        
+
         return (
           <ConversationCard
             key={conversation.id}
@@ -77,7 +77,7 @@ export default function ConversationList({onSelectConversation, activeId}) {
 
 
 
-    
+
       </div>
     </section>
   );
@@ -93,7 +93,7 @@ function ConversationCard({ active, name, user, profileImage, lastText, onClick 
       : "hover:bg-gray-50"
     }`}
     >
-  
+
       <div className="flex gap-3">
         <img
           src={profileImage}

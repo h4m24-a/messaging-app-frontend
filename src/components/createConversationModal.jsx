@@ -1,11 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery , useQueryClient} from "@tanstack/react-query";
 import { useAuthContext } from "../context/useAuthContext";
 import getAllUsers from "../services/allUsers";
+import createConversation from "../services/createConversation";
+import { useState } from "react";
 
 export default function CreateConversationModal() {
 
   
   const { accessToken } = useAuthContext();
+
+  const queryClient = useQueryClient()
+
+  const [userBId, setUserBId] = useState();
+  const [success, setSuccess] = useState("");
+  const [error, setError] =  useState("")
+  const [userError, setUserError] = useState("")
+
+
 
   const{ data, isLoading, isError } = useQuery({
     queryKey: ['users'],
@@ -14,6 +25,32 @@ export default function CreateConversationModal() {
   })
 
 
+const HandleCreateConversation = async () => {
+  try {
+
+    if (!userBId) {
+      return setUserError("Select a user")
+    }
+    const response = await createConversation(accessToken, userBId);
+
+    setSuccess(response.message);
+    setError("");
+    setUserError("")
+    setUserBId("")
+    setSuccess("")
+    queryClient.invalidateQueries({ queryKey: ['conversations'] });
+  } catch (error) {
+    setError(error.message);
+    setUserBId("")
+    setUserError("")
+    setSuccess("");
+  }
+};
+
+
+const HandleUserId = (userId) => {
+  setUserBId(userId);
+};
   
   return (
     <div className="w-96 rounded-3xl border border-slate-300 bg-white p-6 shadow-xl">
@@ -41,23 +78,34 @@ export default function CreateConversationModal() {
 
       <div className="space-y-5">
        {data?.users.map((user) => (
-  <UserCard
-    key={user.id}
-    name={user.username}
-    profile_image={user.profile_image}
-  />
-))}
+
+          <UserCard
+            key={user.id}
+            name={user.username}
+            profile_image={user.profile_image}
+            onSelectUserId={() => HandleUserId(user.id)}
+          />
+        ))}
+
+        {success && <p>{success}</p>}
+        {userError && <p>{userError}</p>}
+
+        {error && <p>{error}</p>}
         
       </div>
 
-      <button className="mt-8 w-full rounded-2xl bg-blue-500 py-4 font-semibold text-white">
-        Start chat
-      </button>
+
+        <button 
+          className="mt-8 w-full rounded-2xl bg-blue-500 py-4 font-semibold text-white cursor-pointer"
+          onClick={HandleCreateConversation}>
+            Start chat
+        </button>
+
     </div>
   );
 }
 
-function UserCard({name, profile_image,}) {
+function UserCard({name, profile_image, onSelectUserId}) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
@@ -81,6 +129,7 @@ function UserCard({name, profile_image,}) {
       <input
         type="radio"
         name="user"
+        onChange={onSelectUserId}
       />
     </div>
   );

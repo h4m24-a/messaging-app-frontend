@@ -117,6 +117,7 @@
 
 .auth-form input {
   width: 100%;
+  text-transform: lowercase;
 
   padding: 14px 16px;
 

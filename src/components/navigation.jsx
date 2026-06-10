@@ -19,7 +19,7 @@ export default function Navigation() {
   return (
     <aside className="flex w-35 flex-col justify-between border-r border-slate-300 bg-stone-50 py-8">
       <div>
-        <p className="block px-4 py-2 capitalize text-center font-bold text-black">{loggedInUser}</p>
+        <p className="block px-4 py-2 text-center font-bold text-black">{loggedInUser}</p>
         <div className="mb-12 flex justify-center">
           <div className="relative">
             {profileImage && (

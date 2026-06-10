@@ -102,12 +102,12 @@ function ConversationCard({ active, name, user, profileImage, lastText, onClick 
         />
 
         <div>
-          <h3 className="font-semibold capitalize">
+          <h3 className="font-semibold">
             {name}
           </h3>
 
           <p className="text-sm text-gray-500">
-           <span className="capitalize">{user}</span>: {lastText}
+           {user}: {lastText}
           </p>
         </div>
       </div>

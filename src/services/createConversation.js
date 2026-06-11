@@ -15,7 +15,6 @@ const createConversation = async (token, userBId ) => {
     throw new Error(data.error);
   }
 
-  console.log(data)
   return data;
 };
 

@@ -1,8 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuthContext } from "../context/useAuthContext";
 import viewConversation from "../services/viewConversation";
+import createMessage from "../services/createMessage";
+import { useState } from "react";
 
 export default function ChatWindow({ conversationId }) {
+
+  const queryClient = useQueryClient()
+
+  const [message, setMessage] = useState("");
+  const [messageError, setMessageError] = useState("")
+  const [messageValidationError, setMessageValidationError] = useState("")
 
 
 const { accessToken, userId } = useAuthContext();
@@ -18,6 +26,41 @@ const { accessToken, userId } = useAuthContext();
   const convo = data?.conversation
 
   const otherUser = convo?.user1.id === userId  ? convo?.user2 : convo?.user1;
+
+
+  const HandlePostMessage = async (e) => {
+    try {
+      e.preventDefault()
+  
+      const response = await createMessage(accessToken, conversationId, message)
+  
+      // Validation errors
+      if (response.status === 400) {
+  
+      const messageErr = {}
+  
+      // Convert error into an object
+      response.data.errors.forEach(err => {
+        messageErr[err.path] = err.msg
+      })
+  
+      setMessageValidationError(messageErr)
+      setMessage("")
+      setMessageError("")
+      return
+    }
+  
+    if (response) {
+      setMessageError("")
+      setMessage("")
+      setMessageValidationError("")
+      queryClient.invalidateQueries({ queryKey: ['conversation']})
+    }
+      
+    } catch (error) {
+      setMessageError(error.message)
+    }
+  }
 
 
   
@@ -84,16 +127,34 @@ const { accessToken, userId } = useAuthContext();
 
       {/* Input */}
       <footer className="border-t border-slate-300 p-6">
+          <form 
+          onSubmit={(e) => HandlePostMessage(e)}
+          >
         <div className="flex items-center gap-4 rounded-2xl border border-slate-300 px-4 py-3">
-          <input
-            placeholder="Type a message..."
-            className="flex-1 outline-none"
-          />
 
-          <button className="rounded-lg bg-blue-600 p-3 text-white">
-            <i className="fa-solid fa-paper-plane fa-lg cursor-pointer"></i>
-          </button>
+            <input
+              placeholder="Type a message..."
+              className="flex-1 outline-none"
+              name="message"
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              required
+              />
+
+            <button type="submit" className="rounded-lg bg-blue-600 p-3 text-white">
+              <i className="fa-solid fa-paper-plane fa-lg cursor-pointer"></i>
+            </button>
+          
         </div>
+          </form>
+          {messageError && (
+            <p> {messageError} </p>
+          )}
+
+           {messageValidationError.message && (
+            <p> {messageValidationError.message} </p>
+          )}
       </footer>
     </section>
   );

@@ -1,12 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import getConversationList from "../services/conversationList";
 import { useAuthContext } from "../context/useAuthContext";
+import markSeen from "../services/markSeen";
 
 
 
 export default function ConversationList({onSelectConversation, activeId}) {
 
   const { accessToken, userId } = useAuthContext();
+  const queryClient = useQueryClient()
 
 
   const {data, isLoading, isError } = useQuery({
@@ -15,6 +17,23 @@ export default function ConversationList({onSelectConversation, activeId}) {
     enabled: !!accessToken
   })
 
+
+  
+    // Mark message as seen when opening chat
+    const markSeenMutation = useMutation({
+      mutationFn:(conversationId) => markSeen(accessToken, conversationId),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['conversation']})
+      }
+    })
+
+
+
+    const HandleClick = async (conversationId) => {
+      onSelectConversation(conversationId)
+      markSeenMutation.mutate(conversationId)
+
+    }
 
 
 
@@ -69,7 +88,7 @@ export default function ConversationList({onSelectConversation, activeId}) {
             profileImage={otherUser.profile_image}
             user={conversation.messages?.[0]?.sender?.username}
             lastText={conversation.messages?.[0]?.text ?? "No messages yet"}
-            onClick={ ()=> onSelectConversation(conversation.id)}
+            onClick={ ()=> HandleClick(conversation.id)}
             active={activeId === conversation.id}
           />
       );
@@ -83,10 +102,11 @@ export default function ConversationList({onSelectConversation, activeId}) {
   );
 }
 
-function ConversationCard({ active, name, user, profileImage, lastText, onClick }) {
+function ConversationCard({ active, name, user, profileImage, lastText, onClick, onChange }) {
   return (
     <div
     onClick={onClick}
+    onChange={onChange}
     className={`flex cursor-pointer items-center justify-between rounded-2xl p-4 transition ${
       active
       ? "bg-green-100"

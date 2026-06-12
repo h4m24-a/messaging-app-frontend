@@ -88,6 +88,7 @@ const { accessToken, userId } = useAuthContext();
       setMessage("")
       setMessageValidationError("")
       queryClient.invalidateQueries({ queryKey: ['conversation']})
+      queryClient.invalidateQueries({ queryKey: ['conversations']})
     }
       
     } catch (error) {
@@ -142,6 +143,7 @@ const { accessToken, userId } = useAuthContext();
         const res = await deleteMessage(accessToken, conversationId, messageId);
         console.log(res)
         queryClient.invalidateQueries({ queryKey: ['conversation']})
+        queryClient.invalidateQueries({ queryKey: ['conversations']})
       } catch (error) {
         setDeleteMessageError(error.message)
       }

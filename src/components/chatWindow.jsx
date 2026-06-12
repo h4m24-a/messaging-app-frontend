@@ -3,6 +3,7 @@ import { useAuthContext } from "../context/useAuthContext";
 import viewConversation from "../services/viewConversation";
 import createMessage from "../services/createMessage";
 import updateMessage from "../services/updateMessage";
+import deleteMessage from "../services/deleteMessage";
 import { useState, useEffect, Fragment } from "react";
 
 export default function ChatWindow({ conversationId }) {
@@ -19,6 +20,8 @@ export default function ChatWindow({ conversationId }) {
 
   const [selectMessageId, setSelectMessageId] = useState()
 
+  const [deleteMessageError, setDeleteMessageError] = useState("")
+
   const [showForm, setShowForm] = useState(false)
 
 
@@ -28,7 +31,7 @@ const { accessToken, userId } = useAuthContext();
   const {data, isLoading, isError } = useQuery({
     queryKey: ["conversation"],
     queryFn: () => viewConversation(accessToken, conversationId ),
-    enabled: !!accessToken && !!conversationId
+    enabled: !!accessToken && !!conversationId,
   })
 
     useEffect(() => {
@@ -131,6 +134,19 @@ const { accessToken, userId } = useAuthContext();
   }
 
 
+  const HandleDeleteMessage = async (messageId) => {
+    const alertYes = window.confirm("Do you want to delete this comment?")
+
+    if (alertYes) {
+      try {
+        const res = await deleteMessage(accessToken, conversationId, messageId);
+        console.log(res)
+        queryClient.invalidateQueries({ queryKey: ['conversation']})
+      } catch (error) {
+        setDeleteMessageError(error.message)
+      }
+      }
+  }
   
 // get the id of selected message and use it to display the update form.
   const HandleSelectMessageId = (messageId) => {
@@ -201,7 +217,7 @@ const { accessToken, userId } = useAuthContext();
                 <div className=" flex flex-row justify-end items-center  gap-3">
                   <button
                     type="button"
-                    // onClick={() => HandleDeleteComment(msg.id)}
+                    onClick={() => HandleDeleteMessage(msg.id)}
                     className="h-8 text-xs cursor-pointer max-w-fit w-fit rounded-md outline-neutral-950 outline px-5 font-medium text-black transition active:scale-110"
                   >
                     <i className="fa-solid fa-xmark"></i>
@@ -244,6 +260,10 @@ const { accessToken, userId } = useAuthContext();
                 </form>
                 {updatedMessageError && (
                   <p> {updatedMessageError} </p>
+                )}
+
+                 {deleteMessageError && (
+                  <p> {deleteMessageError} </p>
                 )}
 
                 {updatedMessageValidationError.message && (

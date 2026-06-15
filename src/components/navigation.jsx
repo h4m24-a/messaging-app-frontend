@@ -1,12 +1,11 @@
 import { useAuthContext } from "../context/useAuthContext";
-
+import { useLocation, Link } from "react-router";
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 export default function Navigation() {
-
-  
+  const location = useLocation()
 
   const navigation = [
   { name: ' Chats', icon:<i className="fa-solid fa-comment fa-lg mr-2"></i>,  href: '/', current: true },
@@ -34,20 +33,20 @@ export default function Navigation() {
         </div>
 
 
-        <nav className="space-y-2 flex flex-col items-center rounded-xl active:bg-purple-100 px-4 py-4 active:text-blue-600 ">
+        <nav className="space-y-2 flex flex-col items-center rounded-xl">
           {navigation.map((item) => (
-                  <a
+                   <Link 
+                  to={item.href}
                     key={item.name}
-                    href={item.href}
-                    aria-current={item.current ? 'page' : undefined}
+                    aria-current={item.href ? 'page' : undefined}
                     className={classNames(
-                      item.current ? 'bg-blue-600 text-md text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-blue-600 text-md',
-                      'rounded-md px-3 py-2 text-md font-medium'
+                      location.pathname === item.href? 'bg-blue-600 text-md text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-blue-600 text-md',
+                      'rounded-md px-3 py-2 text-md font-medium',
                     )}
                   >
                     {item.icon}
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
 
 

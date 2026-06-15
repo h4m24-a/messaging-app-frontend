@@ -25,7 +25,7 @@ export default function Navigation() {
               <img
                 src={profileImage}
                 alt="User Profile Image"
-                className="h-14 w-14 rounded-full"
+                className="h-14 w-14 rounded-full object-cover"
               />
             )}
             <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-500 border-2 border-white" />

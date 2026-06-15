@@ -61,16 +61,12 @@ export default function ConversationList({onSelectConversation, activeId}) {
         </button>
       </div>
 
-      <input
-        type="text"
-        placeholder="Search conversations"
-        className="mb-6 w-full rounded-xl border border-slate-300 px-4 py-3 outline-none"
-      />
+      <div className="border-b-2 bg-slate-400 text-slate-300"></div>
 
       <div className="space-y-3">
-
+        
         {data?.conversations.length === 0 &&  (
-          <p className=" text-xl text-center mt-6 text-red-500 font-mono">No conversations are found!</p>
+          <p className="text-center text-slate-400 mt-6">No conversations are found!</p>
         )}
 
 
@@ -118,7 +114,7 @@ function ConversationCard({ active, name, user, profileImage, lastText, onClick,
         <img
           src={profileImage}
           alt=""
-          className="h-12 w-12 rounded-full"
+          className="h-12 w-12 rounded-full object-cover"
         />
 
         <div>

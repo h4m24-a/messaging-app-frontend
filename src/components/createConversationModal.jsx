@@ -112,7 +112,7 @@ function UserCard({name, profile_image, onSelectUserId}) {
         <img
           src={profile_image}
           alt=""
-          className="h-12 w-12 rounded-full"
+          className="h-12 w-12 rounded-full object-cover"
         />
 
         <div>

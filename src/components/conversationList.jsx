@@ -61,7 +61,7 @@ export default function ConversationList({onSelectConversation, activeId}) {
         </button>
       </div>
 
-      <div className="border-b-2 bg-slate-400 text-slate-300"></div>
+      <div className="border-b-2 bg-slate-400 text-slate-300 mb-2"></div>
 
       <div className="space-y-3">
         

@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import getConversationList from "../services/conversationList";
 import { useAuthContext } from "../context/useAuthContext";
 import markSeen from "../services/markSeen";
+import { useState } from "react";
 
 
 
@@ -9,6 +10,7 @@ export default function ConversationList({onSelectConversation, activeId}) {
 
   const { accessToken, userId } = useAuthContext();
   const queryClient = useQueryClient()
+  const [search, setSearch] = useState("")
 
 
   const {data, isLoading, isError } = useQuery({
@@ -32,9 +34,19 @@ export default function ConversationList({onSelectConversation, activeId}) {
     const HandleClick = async (conversationId) => {
       onSelectConversation(conversationId)
       markSeenMutation.mutate(conversationId)
+      setSearch("")
 
     }
 
+
+    const conversations = data?.conversations || []
+    
+    const filteredConversations = conversations.filter((convo) => {
+        const otherUser =
+             convo.user1.id === userId ? convo.user2: convo.user1;
+        return otherUser?.username?.toLowerCase().includes(search.toLowerCase()) 
+
+      })
 
 
   if (isLoading) {
@@ -61,7 +73,13 @@ export default function ConversationList({onSelectConversation, activeId}) {
         </button>
       </div>
 
-      <div className="border-b-2 bg-slate-400 text-slate-300 mb-2"></div>
+       <input  // input form for searching users
+        placeholder="Search users..."
+        className="mb-6 w-full rounded-xl border border-slate-300 px-4 py-3"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+
 
       <div className="space-y-3">
         
@@ -70,12 +88,10 @@ export default function ConversationList({onSelectConversation, activeId}) {
         )}
 
 
-     {data?.conversations.map((conversation) => {
+     {filteredConversations.map((conversation) => {
 
        const otherUser =
-       conversation.user1.id === userId
-       ? conversation.user2
-       : conversation.user1;
+       conversation.user1.id === userId ? conversation.user2: conversation.user1;
 
         return (
           <ConversationCard

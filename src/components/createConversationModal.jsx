@@ -16,6 +16,8 @@ export default function CreateConversationModal() {
   const [error, setError] =  useState("")
   const [userError, setUserError] = useState("")
 
+  const [search, setSearch] = useState("")
+
 
 
   const{ data, isLoading, isError } = useQuery({
@@ -24,6 +26,14 @@ export default function CreateConversationModal() {
     enabled: !!accessToken
   })
 
+  
+const users = data?.users || [];   // storing data of users
+  const filteredUsers =     // creates a new array of matching users only 
+    users.filter((user) =>
+      //  "john".includes("jo") → if true   - User is kept
+      user?.username?.toLowerCase().includes(search.toLowerCase()) // pass the element that you want to check for as an argument to .includes, here I pass the search state which stores the value from the form.
+    );
+  
 
 const HandleCreateConversation = async () => {
   try {
@@ -54,18 +64,22 @@ const HandleUserId = (userId) => {
   
   return (
     <div className="w-96 rounded-3xl border border-slate-300 bg-white p-6 shadow-xl">
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-3xl font-bold">
+      <div className="mb-6 flex items-center justify-start">
+        <h2 className="text-3xl text-center font-bold">
           Create conversation
         </h2>
 
-        <button>✕</button>
       </div>
 
-      <input
+      <input  // input form for searching users
         placeholder="Search users..."
         className="mb-6 w-full rounded-xl border border-slate-300 px-4 py-3"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
       />
+
+     
+
 
       {isLoading  && (
         <p>Loading Users</p>
@@ -77,15 +91,14 @@ const HandleUserId = (userId) => {
       )}
 
       <div className="space-y-5">
-       {data?.users.map((user) => (
-
-          <UserCard
-            key={user.id}
-            name={user.username}
-            profile_image={user.profile_image}
-            onSelectUserId={() => HandleUserId(user.id)}
-          />
-        ))}
+       {filteredUsers.map((user) => (
+    <UserCard
+      key={user.id}
+      name={user.username}
+      profile_image={user.profile_image}
+      onSelectUserId={() => HandleUserId(user.id)}
+    />
+  ))}
 
         {success && <p>{success}</p>}
         {userError && <p>{userError}</p>}

@@ -151,12 +151,18 @@ const { accessToken, userId } = useAuthContext();
   }
   
 // get the id of selected message and use it to display the update form.
-  const HandleSelectMessageId = (messageId) => {
-    setSelectMessageId(messageId)
-    setShowForm(!showForm)    // flips value when clicked to hide and display form
-    setUpdatedMessageError("");
-    setUpdatedMessageValidationError("")
+const HandleSelectMessageId = (messageId) => {
+  if (selectMessageId === messageId && showForm) {
+    setShowForm(false);
+    setSelectMessageId(null);
+  } else {
+    setSelectMessageId(messageId);
+    setShowForm(true);
   }
+
+  setUpdatedMessageError("");
+  setUpdatedMessageValidationError("");
+};
 
 
   
@@ -336,14 +342,15 @@ function MessageBubble({ message, incoming, seen }) {
         {message}
 
       </div>
+
+
       
-{!incoming && seen && (
-        <p className="ml-2 self-end text-xs text-gray-500">
+      {!incoming && seen && (
+    <p className="ml-2 self-end text-xs text-gray-500">
           Seen
         </p>
       )}
-
-          
+ 
 
 
     </div>

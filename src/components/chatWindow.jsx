@@ -5,11 +5,12 @@ import createMessage from "../services/createMessage";
 import updateMessage from "../services/updateMessage";
 import deleteMessage from "../services/deleteMessage";
 import { useState, useEffect, Fragment } from "react";
+import { useParams } from "react-router";
 
-export default function ChatWindow({ conversationId }) {
+export default function ChatWindow() {
 
   const queryClient = useQueryClient()
-
+  const { id } = useParams()
   const [message, setMessage] = useState("");
   const [messageError, setMessageError] = useState("")
   const [messageValidationError, setMessageValidationError] = useState("")
@@ -30,8 +31,8 @@ const { accessToken, userId } = useAuthContext();
 
   const {data, isLoading, isError } = useQuery({
     queryKey: ["conversation"],
-    queryFn: () => viewConversation(accessToken, conversationId ),
-    enabled: !!accessToken && !!conversationId,
+    queryFn: () => viewConversation(accessToken, id),
+    enabled: !!accessToken && !!id
   })
 
     useEffect(() => {
@@ -65,7 +66,7 @@ const { accessToken, userId } = useAuthContext();
     try {
       e.preventDefault()
   
-      const response = await createMessage(accessToken, conversationId, message)
+      const response = await createMessage(accessToken, id, message)
   
       // Validation errors
       if (response.status === 400) {
@@ -103,7 +104,7 @@ const { accessToken, userId } = useAuthContext();
     try {
       e.preventDefault()
   
-      const response = await updateMessage(accessToken, conversationId, updatedMessage, messageId)
+      const response = await updateMessage(accessToken, id, updatedMessage, messageId)
   
       // Validation errors
       if (response.status === 400) {
@@ -140,7 +141,7 @@ const { accessToken, userId } = useAuthContext();
 
     if (alertYes) {
       try {
-        const res = await deleteMessage(accessToken, conversationId, messageId);
+        const res = await deleteMessage(accessToken, id, messageId);
         console.log(res)
         queryClient.invalidateQueries({ queryKey: ['conversation']})
         queryClient.invalidateQueries({ queryKey: ['conversations']})
@@ -167,24 +168,21 @@ const HandleSelectMessageId = (messageId) => {
 
   
 
-  if (!conversationId) {    // show this when user hasn't selected a conversation
-     return <div className="flex-1 flex items-center justify-center text-slate-400">Select a chat to begin</div>;
-  }
+if (!id) {    // show this when user hasn't selected a conversation
+   return <div className="hidden lg:flex-1 lg:flex lg:items-center lg:justify-center lg:text-slate-400">Select a chat to begin</div>;
+}
 
-  return (
-    <section className="flex flex-1 flex-col  bg-white">
+return (
+  <section className="flex flex-1 flex-col  bg-white">
       {/* Header */}
-
-      
-    
             <>
-            <header className="flex items-center justify-between border-b border-slate-300 p-6">
+            <header className="flex items-center justify-between  border-slate-300 p-6">
         <div className="flex items-center gap-3">
           
           <img
             src={otherUser?.profile_image}
             alt=""
-            className="h-12 w-12 rounded-full"
+            className="h-12 w-12 rounded-full object-cover"
           />
 
           <div>

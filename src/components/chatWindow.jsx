@@ -5,12 +5,13 @@ import createMessage from "../services/createMessage";
 import updateMessage from "../services/updateMessage";
 import deleteMessage from "../services/deleteMessage";
 import { useState, useEffect, Fragment } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 
 export default function ChatWindow() {
 
   const queryClient = useQueryClient()
   const { id } = useParams()
+  const Navigate = useNavigate()
   const [message, setMessage] = useState("");
   const [messageError, setMessageError] = useState("")
   const [messageValidationError, setMessageValidationError] = useState("")
@@ -166,6 +167,9 @@ const HandleSelectMessageId = (messageId) => {
 };
 
 
+const HandleBackButton = () => {
+  Navigate('/')
+}
   
 
 if (!id) {    // show this when user hasn't selected a conversation
@@ -175,10 +179,17 @@ if (!id) {    // show this when user hasn't selected a conversation
 return (
   <section className="flex flex-1 flex-col  bg-white">
       {/* Header */}
-            <>
-            <header className="flex items-center justify-between  border-slate-300 p-6">
+
+      <>
+      <header className="flex items-center justify-between  border-slate-300 p-6">
         <div className="flex items-center gap-3">
-          
+
+          <button className="lg:hidden"  // Back button on mobile view only
+          onClick={() => HandleBackButton()} 
+          type="button">
+          <i className="fa-solid fa-arrow-left fa-xl"> </i>
+          </button>
+
           <img
             src={otherUser?.profile_image}
             alt=""

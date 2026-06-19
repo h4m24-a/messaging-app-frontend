@@ -3,15 +3,17 @@ import getConversationList from "../services/conversationList";
 import { useAuthContext } from "../context/useAuthContext";
 import markSeen from "../services/markSeen";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 
-export default function ConversationList({onSelectConversation, activeId}) {
+export default function ConversationList() {
 
   const { accessToken, userId } = useAuthContext();
   const queryClient = useQueryClient()
   const [search, setSearch] = useState("")
-
+  const [selectedConvoId, setSelectedConvoId] = useState("")
+  const navigate = useNavigate()
 
   const {data, isLoading, isError } = useQuery({
     queryKey: ["conversations"],
@@ -32,8 +34,9 @@ export default function ConversationList({onSelectConversation, activeId}) {
 
 
     const HandleClick = async (conversationId) => {
-      onSelectConversation(conversationId)
       markSeenMutation.mutate(conversationId)
+      setSelectedConvoId(conversationId)
+      navigate(`/conversations/${conversationId}`);
       setSearch("")
 
     }
@@ -62,7 +65,7 @@ export default function ConversationList({onSelectConversation, activeId}) {
 
 
   return (
-    <section className="w-96 border-r border-slate-300 bg-white p-6">
+    <section className="sm:w-full  sm:border-0 lg:w-96 lg:border-r sm:p-0 border-slate-300 bg-white lg:p-6">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-3xl font-bold">
           Chats
@@ -101,7 +104,9 @@ export default function ConversationList({onSelectConversation, activeId}) {
             user={conversation.messages?.[0]?.sender?.username}
             lastText={conversation.messages?.[0]?.text ?? "No messages yet"}
             onClick={ ()=> HandleClick(conversation.id)}
-            active={activeId === conversation.id}
+            active={selectedConvoId}
+            id={conversation.id}
+            
           />
       );
     })}
@@ -114,15 +119,14 @@ export default function ConversationList({onSelectConversation, activeId}) {
   );
 }
 
-function ConversationCard({ active, name, user, profileImage, lastText, onClick, onChange }) {
+function ConversationCard({id, active, name, user, profileImage, lastText, onClick, onChange }) {
+  const isActive = active === id;
   return (
     <div
     onClick={onClick}
     onChange={onChange}
     className={`flex cursor-pointer items-center justify-between rounded-2xl p-4 transition ${
-      active
-      ? "bg-green-100"
-      : "hover:bg-gray-50"
+      isActive ? "bg-green-100" : "hover:bg-gray-50"
     }`}
     >
 

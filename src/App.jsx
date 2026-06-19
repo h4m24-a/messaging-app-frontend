@@ -1,18 +1,19 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Navigate, BrowserRouter, Routes, Route } from "react-router";
-import Homepage from "./pages/homepage";
+import Layout from "./pages/layout";
 import LoginPage from "./pages/loginPage";
 import ProfilePage from "./pages/profilePage";
 import SignupPage from "./pages/signupPage"
 import Error from "./pages/errorPage";
 import { useAuthContext } from "./context/useAuthContext"
+import ChatWindow from "./components/chatWindow";
 
 
 const queryClient = new QueryClient();
 
 function App() {
   
-  
+  const isMobile = window.innerWidth  <= 768
   const { isAuthenticated, loading } = useAuthContext();
   
   if (loading) {
@@ -25,7 +26,17 @@ function App() {
       <Routes>
         {isAuthenticated ? (    // authenticated
           <>
-            <Route path="/" element={<Homepage />} />
+
+          {isMobile && (
+            <>
+             <Route path="/" element={<Layout />} />
+             <Route path="/conversations/:id" element={<ChatWindow />} />
+             </>
+          )}
+          
+            <Route path="/" element={<Layout />}>
+             <Route path="/conversations/:id" element={<ChatWindow />} />
+            </Route>
             <Route path="/profile" element={<ProfilePage />} />
 
             <Route path="*" element={<Error />} />
@@ -46,3 +57,4 @@ function App() {
 }
 
 export default App
+

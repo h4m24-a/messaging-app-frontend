@@ -7,13 +7,29 @@ import SignupPage from "./pages/signupPage"
 import Error from "./pages/errorPage";
 import { useAuthContext } from "./context/useAuthContext"
 import ChatWindow from "./components/chatWindow";
+import { useState, useEffect } from "react";
 
 
 const queryClient = new QueryClient();
 
 function App() {
+
+
+function useWindowWidth() {
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+
+    window.addEventListener("resize", handleResize);    // Browser listening for a resize
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return width;
+}
+  const width = useWindowWidth();
+  const isMobile = width <= 768;
   
-  const isMobile = window.innerWidth  <= 768
   const { isAuthenticated, loading } = useAuthContext();
   
   if (loading) {

@@ -11,7 +11,7 @@ const LoginPage = () => {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
 
-  const Navigate = useNavigate()
+  const navigate = useNavigate()
 
   const { login } = useAuthContext();
   
@@ -19,7 +19,12 @@ const LoginPage = () => {
   
 
   const HandleLogin = async (e) => {
-  e.preventDefault();
+
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+    setSuccess("");
+
 
 
     try {
@@ -42,7 +47,7 @@ const LoginPage = () => {
       
       // If successfull
       if (response.status === 200) {
-        Navigate('/')
+        navigate('/')
         login(data.accessToken);
         setError("")
         setSuccess(data.message)
@@ -52,7 +57,7 @@ const LoginPage = () => {
 
     
     } catch (error) {
-      throw error(error.message)
+      setError(error.message)
     }
     finally {
       setIsLoading(false)
@@ -61,9 +66,9 @@ const LoginPage = () => {
     
   };
   
-  if (isLoading) (
-     <div>Loading Log In form</div>
-  )
+if (isLoading) {
+  return <div>Logging In</div>;
+}
 
   return (
     <>

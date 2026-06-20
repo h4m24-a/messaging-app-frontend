@@ -65,13 +65,13 @@ export default function ConversationList() {
 
 
   return (
-    <section className="sm:w-full  sm:border-0 lg:w-96 lg:border-r sm:p-0 border-slate-300 bg-white lg:p-6">
+    <section className="w-96  sm:border-0 lg:w-96 lg:border-r sm:p-0 border-slate-300 bg-white lg:p-6">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-3xl font-bold">
           Chats
         </h1>
 
-        <button className="rounded-xl bg-purple-100 p-3 text-purple-600">
+        <button className="rounded-xl mt-2 lg:mt-0  bg-purple-100 p-3 text-purple-600">
           ✏️
         </button>
       </div>

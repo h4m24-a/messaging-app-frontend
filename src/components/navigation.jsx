@@ -1,74 +1,143 @@
+import { Disclosure } from "@headlessui/react";
+import {
+  Bars3Icon,
+  XMarkIcon,
+  ChatBubbleLeftIcon,
+  UserIcon,
+  ArrowRightOnRectangleIcon,
+} from "@heroicons/react/24/outline";
+
 import { useAuthContext } from "../context/useAuthContext";
-import { useLocation, Link } from "react-router";
+import { useLocation, Link } from "react-router-dom";
+
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
-export default function Navigation() {
-  const location = useLocation()
+export default function Sidebar() {
+  const location = useLocation();
+  const { logout, loggedInUser, profileImage } = useAuthContext();
 
   const navigation = [
-  { name: ' Chats', icon:<i className="fa-solid fa-comment fa-lg mr-2"></i>,  href: '/', current: true },
-  { name: ' Profile', icon:<i className="fa-solid fa-circle-user fa-lg mr-2"></i>,  href: '/profile', current: false },
-]
-
-  const { logout, loggedInUser, profileImage  } = useAuthContext(); // Authentication context
-
+    { name: "Chats", href: "/", icon: ChatBubbleLeftIcon },
+    { name: "Profile", href: "/profile", icon: UserIcon },
+  ];
 
   return (
-    <aside className="flex w-35 flex-col justify-between border-r border-slate-300  py-8">
-      <div>
-        <p className="block px-4 py-2 text-center font-bold text-black">{loggedInUser}</p>
-        <div className="mb-12 flex justify-center">
-          <div className="relative">
+    <Disclosure as="div" className="flex">
+      
+      {/* Desktop Sidebar */}
+      <div className="hidden lg:flex lg:w-36 lg:flex-col lg:justify-between lg:border-r lg:border-slate-300 lg:h-screen lg:py-6">
+
+        {/* Top */}
+        <div>
+          {/* User */}
+          <div className="flex flex-col items-center mb-6">
             {profileImage && (
               <img
                 src={profileImage}
-                alt="User Profile Image"
                 className="h-14 w-14 rounded-full object-cover"
+                alt="profile"
               />
             )}
-            <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-500 border-2 border-white" />
+            <p className="mt-2 font-semibold">{loggedInUser}</p>
           </div>
+
+          {/* Nav */}
+          <nav className="flex flex-col gap-2 px-4">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={classNames(
+                  location.pathname === item.href
+                    ? "bg-blue-600 text-white"
+                    : "text-gray-700 hover:bg-gray-100",
+                  "flex items-center gap-3 px-3 py-2 rounded-md font-medium"
+                )}
+              >
+                <item.icon className="w-5 h-5" />
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+        </div>
+        {/* Logout */}
+        <div className="px-4 mb-20 flex flex-col items-end justify-end">
+          <button
+            onClick={logout}
+            className="flex items-center gap-3 w-full px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+          >
+            <ArrowRightOnRectangleIcon className="w-5 h-5" />
+            Logout
+          </button>
         </div>
 
-
-        <nav className="space-y-2 flex flex-col items-center rounded-xl">
-          {navigation.map((item) => (
-                   <Link 
-                  to={item.href}
-                    key={item.name}
-                    aria-current={item.href ? 'page' : undefined}
-                    className={classNames(
-                      location.pathname === item.href? 'bg-blue-600 text-md text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-blue-600 text-md',
-                      'rounded-md px-3 py-2 text-md font-medium',
-                    )}
-                  >
-                    {item.icon}
-                    {item.name}
-                  </Link>
-                ))}
-
-
-        </nav>
       </div>
 
+      {/* Mobile Menu */}
+      <div className="lg:hidden w-full">
+        
+        {/* Top bar */}
+        <div className="flex items-center justify-between p-4 border-b border-slate-300">
+          <p className="font-bold">{loggedInUser}</p>
 
-      <div className=" flex flex-row items-center justify-center ">
-      <button
-       className="px-6 text-center text-md cursor-pointer text-gray-700"
-       onClick={logout}>
+          <Disclosure.Button className="p-2">
+            {({ open }) =>
+              open ? (
+                <XMarkIcon className="w-6 h-6" />
+              ) : (
+                <Bars3Icon className="w-6 h-6" />
+              )
+            }
+          </Disclosure.Button>
+        </div>
 
-      <i className="fa-solid fa-arrow-right-from-bracket fa-md mr-2"></i>
-        Log out
-      </button>
+        {/* Panel */}
+        <Disclosure.Panel className="p-4 space-y-4">
+          
+          {/* Profile */}
+          <div className="flex justify-center">
+            {profileImage && (
+              <img
+                src={profileImage}
+                className="h-14 w-14 rounded-full"
+                alt="profile"
+              />
+            )}
+          </div>
 
+          {/* Nav */}
+          <div className="flex flex-col gap-2">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={classNames(
+                  location.pathname === item.href
+                    ? "bg-blue-600 text-white"
+                    : "text-gray-700 hover:bg-gray-100",
+                  "flex items-center gap-3 px-3 py-2 rounded-md"
+                )}
+              >
+                <item.icon className="w-5 h-5" />
+                {item.name}
+              </Link>
+            ))}
+          </div>
+
+          {/* Logout */}
+          <button
+            onClick={logout}
+            className="flex items-center gap-3 w-full px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+          >
+            <ArrowRightOnRectangleIcon className="w-5 h-5" />
+            Logout
+          </button>
+
+        </Disclosure.Panel>
       </div>
 
-  
-
-
-    </aside>
+    </Disclosure>
   );
 }
-

@@ -4,7 +4,7 @@ import getAllUsers from "../services/allUsers";
 import createConversation from "../services/createConversation";
 import { useState } from "react";
 
-export default function CreateConversationModal() {
+const CreateConversationModal = ({ className = "" }) => {
 
   
   const { accessToken } = useAuthContext();
@@ -60,11 +60,13 @@ const HandleCreateConversation = async () => {
 
 const HandleUserId = (userId) => {
   setUserBId(userId);
+  
 };
   
   return (
-    <div className="w-96 rounded-3xl border border-slate-300 bg-white p-6 shadow-xl">
-      <div className="mb-6 flex items-center justify-start">
+    <>
+    <div className={`w-96 hidden  lg:flex lg:flex-col  rounded-3xl border border-slate-300 bg-white p-6 shadow-xl" ${className}`}>
+      <div className="mb-6 flex items-center   justify-start">
         <h2 className="text-3xl text-center font-bold">
           Create conversation
         </h2>
@@ -115,6 +117,7 @@ const HandleUserId = (userId) => {
         </button>
 
     </div>
+    </>
   );
 }
 
@@ -147,3 +150,5 @@ function UserCard({name, profile_image, onSelectUserId}) {
     </div>
   );
 }
+
+export default CreateConversationModal

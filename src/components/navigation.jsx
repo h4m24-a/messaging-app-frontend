@@ -5,6 +5,7 @@ import {
   ChatBubbleLeftIcon,
   UserIcon,
   ArrowRightOnRectangleIcon,
+  ChatBubbleLeftEllipsisIcon
 } from "@heroicons/react/24/outline";
 
 import { useAuthContext } from "../context/useAuthContext";
@@ -21,6 +22,7 @@ export default function Sidebar() {
   const navigation = [
     { name: "Chats", href: "/", icon: ChatBubbleLeftIcon },
     { name: "Profile", href: "/profile", icon: UserIcon },
+    { name: "Create", href: "/create", icon: ChatBubbleLeftEllipsisIcon },
   ];
 
   return (

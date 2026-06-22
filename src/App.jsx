@@ -8,6 +8,7 @@ import Error from "./pages/errorPage";
 import { useAuthContext } from "./context/useAuthContext"
 import ChatWindow from "./components/chatWindow";
 import { useState, useEffect } from "react";
+import CreateConversationPage from "./pages/createConversationPage";
 
 
 const queryClient = new QueryClient();
@@ -47,13 +48,14 @@ function useWindowWidth() {
             <>
              <Route path="/" element={<Layout />} />
              <Route path="/conversations/:id" element={<ChatWindow />} />
-             </>
+            </>
           )}
           
             <Route path="/" element={<Layout />}>
              <Route path="/conversations/:id" element={<ChatWindow />} />
             </Route>
             <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/create" element={<CreateConversationPage />} />
 
             <Route path="*" element={<Error />} />
           </>

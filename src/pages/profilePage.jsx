@@ -66,8 +66,8 @@ if (isError) {
 
 
   return (
-    <div className="flex h-screen bg-slate-100 font-PlusJakarta p-8">
-      <div className="flex flex-1 overflow-hidden rounded-3xl bg-white shadow-xl">
+    <div className="flex h-screen bg-white font-PlusJakarta p-8">
+      <div className="flex flex-col w-full lg:flex-row lg:flex-1 lg:overflow-hidden lg:rounded-3xl lg:bg-white lg:shadow-xl">
         <Navigation />
 
         <main className="flex-1 overflow-auto">

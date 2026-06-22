@@ -70,7 +70,7 @@ if (isError) {
       <div className="flex flex-1 overflow-hidden rounded-3xl bg-white shadow-xl">
         <Navigation />
 
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-auto">
           <div className="mx-auto max-w-3xl px-10 py-12">
             <div className="flex flex-col items-center">
               <div className="relative">
@@ -111,9 +111,9 @@ if (isError) {
                       
                     />
 
-                    <div className="flex flex-row  text-center items-center justify-between gap-4">
+                    <div className="flex flex-col lg:flex-row max-w-full  text-center items-center justify-between gap-4">
                     {/* File input row */}
-                    <label className="cursor-pointer rounded-lg bg-slate-800 px-4 py-2 text-sm text-white hover:bg-slate-700 transition">
+                    <label className="cursor-pointer rounded-lg bg-slate-800 px-4 py-2 w-full text-sm text-white hover:bg-slate-700 transition">
                       <input
                         type="file"
                         name="updatedProfileImage"
@@ -127,7 +127,7 @@ if (isError) {
 
                       <button
                         type="submit"
-                        className="rounded-lg bg-blue-600 px-4 py-2 cursor-pointer text-white"
+                        className="flex-col lg:flex-row rounded-lg w-full bg-blue-600 px-4 py-2 cursor-pointer text-white"
                       >
                         Update Profile
                       </button>
@@ -154,3 +154,7 @@ if (isError) {
 };
 
 export default ProfilePage;
+
+
+
+//TODO Make this page mobile responsive and CreateConversationModel

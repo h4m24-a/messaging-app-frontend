@@ -5,7 +5,7 @@ const CreateConversationPage = () => {
   return (
 
     <>
-    <div className="flex  bg-white font-PlusJakarta p-8" >
+    <div className="flex h-screen bg-white font-PlusJakarta p-8" >
 
       <div className="flex flex-col w-full lg:flex-row lg:flex-1 lg:overflow-hidden lg:rounded-3xl lg:bg-white lg:shadow-xl">
         <Navigation />

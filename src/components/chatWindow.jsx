@@ -4,7 +4,7 @@ import viewConversation from "../services/viewConversation";
 import createMessage from "../services/createMessage";
 import updateMessage from "../services/updateMessage";
 import deleteMessage from "../services/deleteMessage";
-import { useState, useEffect, Fragment } from "react";
+import { useState, Fragment } from "react";
 import { useParams, useNavigate } from "react-router";
 import { PaperAirplaneIcon, ArrowLeftIcon, XMarkIcon, PencilSquareIcon } from "@heroicons/react/24/solid"
 
@@ -37,26 +37,26 @@ const { accessToken, userId } = useAuthContext();
     enabled: !!accessToken && !!id
   })
 
-    useEffect(() => {
-    // clear updatedComment input when selected id changes
-    setUpdatedMessage("")
-    setUpdatedMessageError("")
-    setUpdatedMessageValidationError("")
-  }, [selectMessageId])  // This hook runs whenever selectCommentId changes
+  //   useEffect(() => {
+  //   // clear updatedComment input when selected id changes
+  //   setUpdatedMessage("")
+  //   setUpdatedMessageError("")
+  //   setUpdatedMessageValidationError("")
+  // }, [selectMessageId])  // This hook runs whenever selectCommentId changes
   
 
 
 
-  // Populate input form with comment for update form
-  useEffect(() => {
-    const selectedMessage = data?.conversation?.messages.find(msg => msg.id === selectMessageId);
+  // // Populate input form with comment for update form
+  // useEffect(() => {
+  //   const selectedMessage = data?.conversation?.messages.find(msg => msg.id === selectMessageId);
     
-    if (selectedMessage) {
-      setUpdatedMessage(selectedMessage.text);  // Populate form with selected comment's content
-    } else {
-      setUpdatedMessage("")
-    }
-  }, [selectMessageId, data])
+  //   if (selectedMessage) {
+  //     setUpdatedMessage(selectedMessage.text);  // Populate form with selected comment's content
+  //   } else {
+  //     setUpdatedMessage("")
+  //   }
+  // }, [selectMessageId, data])
 
 
   const convo = data?.conversation
@@ -163,6 +163,11 @@ const HandleSelectMessageId = (messageId) => {
     setShowForm(true);
   }
 
+   const message = data?.conversation?.messages.find(     // .find returns the first element that satisfies the condition
+    msg => msg.id === messageId // Only updates the selectedMessageid changes changes
+  );
+
+  setUpdatedMessage(message?.text || "");
   setUpdatedMessageError("");
   setUpdatedMessageValidationError("");
 };

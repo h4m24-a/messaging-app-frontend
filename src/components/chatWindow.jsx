@@ -6,6 +6,7 @@ import updateMessage from "../services/updateMessage";
 import deleteMessage from "../services/deleteMessage";
 import { useState, useEffect, Fragment } from "react";
 import { useParams, useNavigate } from "react-router";
+import { PaperAirplaneIcon, ArrowLeftIcon, XMarkIcon, PencilSquareIcon } from "@heroicons/react/24/solid"
 
 export default function ChatWindow() {
 
@@ -187,7 +188,7 @@ return (
           <button className="lg:hidden"  // Back button on mobile view only
           onClick={() => HandleBackButton()} 
           type="button">
-          <i className="fa-solid fa-arrow-left fa-xl"> </i>
+            <ArrowLeftIcon className="h-8 w-8" />
           </button>
 
           <img
@@ -237,7 +238,7 @@ return (
                     onClick={() => HandleDeleteMessage(msg.id)}
                     className="h-8 text-xs cursor-pointer max-w-fit w-fit rounded-md outline-neutral-950 outline px-5 font-medium text-black transition active:scale-110"
                   >
-                    <i className="fa-solid fa-xmark"></i>
+                    <XMarkIcon className="h-5 w-5"/>
                   </button>
 
                   <button
@@ -245,7 +246,7 @@ return (
                     onClick={() => HandleSelectMessageId(msg.id)}
                     className="h-8 text-xs cursor-pointer max-w-fit w-fit rounded-md bg-neutral-950 px-5 font-medium text-white transition active:scale-110"
                   >
-                    <i className="fa-solid fa-pen"></i>
+                    <PencilSquareIcon className="h-5 w-5"/>
                   </button>
                 </div>
               )}
@@ -270,7 +271,7 @@ return (
                     />
 
                   <button type="submit" className="rounded-lg bg-blue-600 p-3 text-white">
-                    <i className="fa-solid fa-paper-plane fa-lg cursor-pointer"></i>
+                    <PaperAirplaneIcon className="cursor-pointer h-5 w-5" />
                   </button>
                 
               </div>
@@ -315,7 +316,7 @@ return (
               />
 
             <button type="submit" className="rounded-lg bg-blue-600 p-3 text-white">
-              <i className="fa-solid fa-paper-plane fa-lg cursor-pointer"></i>
+              <PaperAirplaneIcon className="cursor-pointer h-5 w-5"  />
             </button>
           
         </div>

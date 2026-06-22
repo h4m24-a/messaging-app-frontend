@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router";
+import {ChatBubbleLeftEllipsisIcon} from "@heroicons/react/24/outline"
 
 const SignupPage = () => {
   const [username, setUsername] = useState("");
@@ -93,7 +94,7 @@ const SignupPage = () => {
   <>
   <div className="auth-page">
     <div className="auth-card">
-      <i className="fa-solid fa-message auth-logo"></i>
+      <ChatBubbleLeftEllipsisIcon className="h-16 w-16 mx-auto text-blue-500" />
 
       <h1>Create Account</h1>
 

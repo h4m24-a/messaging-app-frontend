@@ -4,7 +4,7 @@ import viewConversation from "../services/viewConversation";
 import createMessage from "../services/createMessage";
 import updateMessage from "../services/updateMessage";
 import deleteMessage from "../services/deleteMessage";
-import { useState, Fragment } from "react";
+import { useState, Fragment, useRef, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { PaperAirplaneIcon, ArrowLeftIcon, XMarkIcon, PencilSquareIcon } from "@heroicons/react/24/solid"
 
@@ -27,6 +27,7 @@ export default function ChatWindow() {
 
   const [showForm, setShowForm] = useState(false)
 
+  const messagesRef = useRef(null);
 
 const { accessToken, userId } = useAuthContext();
 
@@ -60,6 +61,13 @@ const { accessToken, userId } = useAuthContext();
 
 
   const convo = data?.conversation
+
+  useEffect(() => {
+  if (messagesRef.current) {
+    messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+  }
+}, [data?.conversation?.messages]);
+
 
   const otherUser = convo?.user1.id === userId  ? convo?.user2 : convo?.user1;
 
@@ -183,7 +191,7 @@ if (!id) {    // show this when user hasn't selected a conversation
 }
 
 return (
-  <section className="flex flex-1 flex-col  bg-white">
+  <section className="flex h-215 lg:h-auto lg:flex-1 flex-col  bg-white">
       {/* Header */}
 
       <>
@@ -217,7 +225,7 @@ return (
       </header>
 
     
-      <div className="flex-1 space-y-6 overflow-y-auto p-6">
+      <div ref={messagesRef} className="flex-1 space-y-6 overflow-auto p-6">
         {isLoading && <div>Loading conversation...</div>}
         {isError && <div>Error fetching conversation...</div>}
 

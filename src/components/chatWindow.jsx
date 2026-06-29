@@ -191,7 +191,7 @@ if (!id) {    // show this when user hasn't selected a conversation
 }
 
 return (
-  <section className="flex h-215 lg:h-auto lg:flex-1 flex-col  bg-white">
+  <section className="flex h-205 lg:h-auto lg:flex-1 flex-col  bg-white">
       {/* Header */}
 
       <>

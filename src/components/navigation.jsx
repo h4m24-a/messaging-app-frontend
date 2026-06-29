@@ -29,7 +29,7 @@ export default function Sidebar() {
     <Disclosure as="div" className="flex">
       
       {/* Desktop Sidebar */}
-      <div className="hidden lg:flex lg:w-36 lg:flex-col lg:justify-between lg:border-r lg:border-slate-300 lg:h-screen lg:py-6">
+      <div className="hidden lg:flex lg:w-44 lg:flex-col lg:justify-between lg:border-r lg:border-slate-300 lg:h-screen lg:py-6">
 
         {/* Top */}
         <div>
@@ -68,7 +68,7 @@ export default function Sidebar() {
         <div className="px-4 mb-20 flex flex-col items-end justify-end">
           <button
             onClick={logout}
-            className="flex items-center gap-3 w-full px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+            className="flex items-center cursor-pointer gap-3 w-full px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
           >
             <ArrowRightOnRectangleIcon className="w-5 h-5" />
             Logout

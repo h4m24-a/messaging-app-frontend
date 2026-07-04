@@ -1,5 +1,5 @@
 const markSeen = async (token, conversationId) => {
-  const response = await fetch(`http://localhost:3000/conversations/${conversationId}/messages/seen`, {
+  const response = await fetch(`messaging-app-backend-production-b49f.up.railway.app/conversations/${conversationId}/messages/seen`, {
     method: 'PATCH',
     credentials: 'include',
     headers: {

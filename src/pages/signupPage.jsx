@@ -23,7 +23,7 @@ const SignupPage = () => {
 
 
     try {
-      const response =  await fetch("http://localhost:3000/api/auth/sign-up", {
+      const response =  await fetch("messaging-app-backend-production-b49f.up.railway.app/api/sign-up", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password }),

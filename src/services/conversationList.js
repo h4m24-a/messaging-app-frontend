@@ -1,5 +1,5 @@
 const getConversationList = async (token) => {
-  const response = await fetch('http://localhost:3000/conversations', {
+  const response = await fetch('messaging-app-backend-production-b49f.up.railway.app/conversations', {
     method: 'GET',
     credentials: 'include',
     headers: {

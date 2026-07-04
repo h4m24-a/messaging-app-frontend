@@ -1,5 +1,5 @@
 const getProfile = async (token) => {
-  const response = await fetch("http://localhost:3000/api/auth/profile/", {
+  const response = await fetch("messaging-app-backend-production-b49f.up.railway.app/api/auth/profile/", {
    
     method: "GET",
     headers: {

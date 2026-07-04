@@ -29,7 +29,7 @@ const LoginPage = () => {
 
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/log-in", {
+      const response = await fetch("messaging-app-backend-production-b49f.up.railway.app/api/log-in", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({ username, password }),

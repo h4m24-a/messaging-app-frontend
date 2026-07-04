@@ -1,5 +1,5 @@
 const updateMessage = async (token, conversationId, updatedMessage, messageId) => {
-  const response = await fetch(`messaging-app-backend-production-b49f.up.railway.app/conversations/${conversationId}/messages/${messageId}`, {
+  const response = await fetch(`https://messaging-app-backend-production-b49f.up.railway.app/conversations/${conversationId}/messages/${messageId}`, {
     method: 'PUT',
     credentials: 'include',
     headers: {

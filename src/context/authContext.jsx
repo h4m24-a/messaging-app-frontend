@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const response = await fetch("messaging-app-backend-production-b49f.up.railway.app/api/auth/logout", {
+      const response = await fetch("https://messaging-app-backend-production-b49f.up.railway.app/api/auth/logout", {
         method: 'POST',
         credentials: 'include'
       });
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
     const getRefresh = async () => {
       if (!isAuthenticated) return;   // If user is not authenticated, return stops the execution of getRefresh
       try {
-        const response = await fetch("messaging-app-backend-production-b49f.up.railway.app/api/refresh", {    // making a get request to this route to allow users to request a new access token using a valid refresh token
+        const response = await fetch("https://messaging-app-backend-production-b49f.up.railway.app/api/refresh", {    // making a get request to this route to allow users to request a new access token using a valid refresh token
           credentials: "include",  // ensures that cookies, authorization tokens, or other credentials are sent with the request,
         });
 
@@ -94,7 +94,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(true)
       
       try {
-        const response = await fetch("messaging-app-backend-production-b49f.up.railway.app/api/auth/userData", {
+        const response = await fetch("https://messaging-app-backend-production-b49f.up.railway.app/api/auth/userData", {
           method: 'GET',
           credentials: "include",
           headers: {

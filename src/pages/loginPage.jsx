@@ -29,7 +29,7 @@ const LoginPage = () => {
 
 
     try {
-      const response = await fetch("messaging-app-backend-production-b49f.up.railway.app/api/log-in", {
+      const response = await fetch("https://messaging-app-backend-production-b49f.up.railway.app/api/log-in", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({ username, password }),

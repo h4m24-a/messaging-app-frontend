@@ -1,5 +1,5 @@
 const getAllUsers = async (token) => {
-  const response = await fetch('messaging-app-backend-production-b49f.up.railway.app/conversations/users', {
+  const response = await fetch('https://messaging-app-backend-production-b49f.up.railway.app/conversations/users', {
     method: 'GET',
     credentials: 'include',
     headers: {

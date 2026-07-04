@@ -7,7 +7,7 @@ const updateProfile = async (token, updatedBio, updatedProfileImage) => {
     formData.append("updatedProfileImage", updatedProfileImage);
   }
 
-  const response = await fetch("messaging-app-backend-production-b49f.up.railway.app/api/auth/profile/", {
+  const response = await fetch("https://messaging-app-backend-production-b49f.up.railway.app/api/auth/profile/", {
     method: "PATCH",
     credentials: "include",
     headers: {

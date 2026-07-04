@@ -1,5 +1,5 @@
 const deleteMessage = async (token, conversationId, messageId) => {
-  const response = await fetch(`messaging-app-backend-production-b49f.up.railway.app/conversations/${conversationId}/messages/${messageId}`, {
+  const response = await fetch(`https://messaging-app-backend-production-b49f.up.railway.app/conversations/${conversationId}/messages/${messageId}`, {
     method: "DELETE",
     credentials: "include",
     headers: {

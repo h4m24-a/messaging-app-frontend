@@ -1,5 +1,5 @@
 const createMessage = async (token, conversationId, message) => {
-  const response = await fetch(`messaging-app-backend-production-b49f.up.railway.app/conversations/${conversationId}/messages`, {
+  const response = await fetch(`https://messaging-app-backend-production-b49f.up.railway.app/conversations/${conversationId}/messages`, {
     method: 'POST',
     credentials: 'include',
     headers: {

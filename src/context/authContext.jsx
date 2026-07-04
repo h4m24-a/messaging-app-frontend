@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const response = await fetch("https://messaging-app-backend-production-b49f.up.railway.app/api/auth/logout", {
+      const response = await fetch("https://messaging-app-backend-production-b49f.up.railway.app/api/logout", {
         method: 'POST',
         credentials: 'include'
       });

@@ -86,7 +86,7 @@ const SignupPage = () => {
   
   
   if (loading)  {
-     return <div>Submitting data</div>
+     <div>Submitting data</div>
   }
   
   

@@ -1,6 +1,6 @@
 # Messaging App Frontend
 
-## View Project : messaging-app-frontend-production.up.railway.app
+## View Project : https://messaging-app-frontend-production.up.railway.app
 
 - React
 - Vite

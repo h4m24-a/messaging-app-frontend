@@ -195,7 +195,7 @@ return (
       {/* Header */}
 
       <>
-      <header className="flex items-center justify-between  border-slate-300 p-6">
+      <header className="flex items-center justify-between border-b  border-slate-300 p-6">
         <div className="flex items-center gap-3">
 
           <button className="lg:hidden"  // Back button on mobile view only

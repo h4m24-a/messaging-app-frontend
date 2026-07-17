@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }) => {
 }); // reads from localStorage right at initialization 
 
 console.log("isAuth",isAuthenticated)
+
   const login = async (token) => { // function is called when a user logs in successfully
     setAccessToken(token); // saving token in state, to use in future requests
     localStorage.setItem("isAuthenticated", "true");    // The first time user logs in, the isAuthenticated entry is created.
@@ -57,7 +58,6 @@ console.log("isAuth",isAuthenticated)
   useEffect(() => {
     
     const getRefresh = async () => {
-      if (!isAuthenticated) return;   // If user is not authenticated, return stops the execution of getRefresh
       try {
         const response = await fetch("https://messaging-app-backend-production-b49f.up.railway.app/api/refresh", {    // making a get request to this route to allow users to request a new access token using a valid refresh token
           credentials: "include",  // ensures that cookies, authorization tokens, or other credentials are sent with the request,

@@ -99,7 +99,7 @@ const SignupPage = () => {
       <h1>Create Account</h1>
 
       <p className="auth-subtitle">
-        Join and messaging others!
+        Join and message others!
       </p>
 
       <form onSubmit={HandleSignUp} className="auth-form">

@@ -75,6 +75,7 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         console.error("Refresh token failed:", error.message);
         setAccessToken(null);
+        setIsAuthenticated(false)
         localStorage.removeItem("isAuthenticated");
       }
     };

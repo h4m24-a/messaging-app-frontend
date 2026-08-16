@@ -38,7 +38,7 @@ const CreateConversationModal = ({ className = "" }) => {
 
       // Tell React Query that the conversation list is stale.
       // The active conversation-list query will refetch.
-      await queryClient.invalidateQueries({
+      await queryClient.refetchQueries({
         queryKey: ["conversations"],
       });
     },

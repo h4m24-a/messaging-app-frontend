@@ -48,7 +48,11 @@ const HandleCreateConversation = async () => {
     setUserError("")
     setUserBId("")
     setSuccess("")
-     await queryClient.refetchQueries({
+    await queryClient.invalidateQueries({
+      queryKey: ["conversations"],
+    });
+
+    await queryClient.refetchQueries({
       queryKey: ["conversations"],
     });
   } catch (error) {

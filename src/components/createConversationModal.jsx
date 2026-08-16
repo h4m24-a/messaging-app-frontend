@@ -48,7 +48,7 @@ const HandleCreateConversation = async () => {
     setUserError("")
     setUserBId("")
     setSuccess("")
-    queryClient.invalidateQueries({ queryKey: ['conversations'] });
+    await queryClient.invalidateQueries({ queryKey: ['conversations'] });
   } catch (error) {
     setError(error.message);
     setUserBId("")

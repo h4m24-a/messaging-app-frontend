@@ -40,10 +40,12 @@ const CreateConversationModal = ({ className = "" }) => {
       // The active conversation-list query will refetch.
       await queryClient.invalidateQueries({
         queryKey: ["conversations", accessToken],
+         exact: false 
       });
 
       await queryClient.refetchQueries({
         queryKey: ["conversations", accessToken],
+         exact: false 
       });
     },
 

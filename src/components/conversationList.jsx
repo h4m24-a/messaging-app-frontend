@@ -104,7 +104,7 @@ export default function ConversationList() {
             user={conversation.messages?.[0]?.sender?.username}
             lastText={conversation.messages?.[0]?.text ?? "No messages yet"}
             onClick={ ()=> HandleClick(conversation.id)}
-            active={selectedConvoId}
+            selectedId={selectedConvoId}
             id={conversation.id}
             
           />
@@ -119,12 +119,11 @@ export default function ConversationList() {
   );
 }
 
-function ConversationCard({id, active, name, user, profileImage, lastText, onClick, onChange }) {
-  const isActive = active === id;
+function ConversationCard({id, selectedId, name, user, profileImage, lastText, onClick }) {
+  const isActive = selectedId === id;   // active is set to selectedConvoId,  id is the default id of the conversation
   return (
     <div
     onClick={onClick}
-    onChange={onChange}
     className={`flex cursor-pointer items-center justify-between rounded-2xl p-4 transition ${
       isActive ? "bg-green-100" : "hover:bg-gray-50"
     }`}
@@ -143,7 +142,7 @@ function ConversationCard({id, active, name, user, profileImage, lastText, onCli
           </h3>
 
           <p className="text-sm text-gray-500">
-           {user}: {lastText}
+            {user && `${user}: `}{lastText}
           </p>
         </div>
       </div>

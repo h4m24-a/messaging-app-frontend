@@ -33,9 +33,8 @@ const ProfilePage = () => {
 
   onSuccess: (data) => {
      // Update global profile image
-    if (data?.profile?.profile_image) {
-      setProfileImage(data.profile.profile_image);
-    }
+    setProfileImage(data.updatedProfile.profile_image);
+    
     queryClient.invalidateQueries({ queryKey: ["profile"] });
     setUpdatedBio("")
     setUpdatedProfileImage(null)

@@ -129,7 +129,7 @@ export const AuthProvider = ({ children }) => {
     getUserData();
     
     
-  }, [accessToken, isAuthenticated]);
+  }, [accessToken, isAuthenticated, profileImage]);
 
 
 

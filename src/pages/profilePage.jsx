@@ -8,7 +8,7 @@ import updateProfile from "../services/updateProfile";
 const ProfilePage = () => {
 
   const queryClient = useQueryClient()
-  const { accessToken , userId} = useAuthContext();
+  const { accessToken, setProfileImage, userId, profileImage } = useAuthContext();
   const [updatedBio, setUpdatedBio] = useState("");
   const [updatedBioError, setUpdatedBioError] = useState("")
 
@@ -33,8 +33,15 @@ const ProfilePage = () => {
 
   onSuccess: (data) => {
     queryClient.invalidateQueries({ queryKey: ["profile"] });
+
+    // Update the global AuthContext state
+    if (data?.profile_image) {
+      setProfileImage(data.profile_image);
+    }
+    
     setUpdatedBio("")
     setUpdatedProfileImage(null)
+    
 
     if (data?.error) {
       setUpdatedBioError(data.error);
@@ -75,7 +82,7 @@ if (isError) {
             <div className="flex flex-col items-center">
               <div className="relative">
                 <img
-                  src={data.profile.profile_image}
+                  src={profileImage || data.profile.profile_image}
                   alt="Profile Image"
                   className="h-30 w-30 rounded-full object-cover shadow-lg"
                 />
@@ -119,7 +126,7 @@ if (isError) {
                         name="updatedProfileImage"
                         accept="image/*"
                         placeholder="Select Image"
-                        onChange={(e) => setUpdatedProfileImage(e.target.files[0])}
+                        onChange={(e) => setProfileImage(e.target.files[0])}
                         className="text-xs text-center"
                         />
                       </label>

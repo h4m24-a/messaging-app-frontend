@@ -129,7 +129,7 @@ export const AuthProvider = ({ children }) => {
     getUserData();
     
     
-  }, [accessToken, isAuthenticated, profileImage]);
+  }, [accessToken, isAuthenticated]);
 
 
 
@@ -143,7 +143,7 @@ export const AuthProvider = ({ children }) => {
 
 
   return (
-    <AuthContext.Provider value={{ accessToken, isAuthenticated, userId, loggedInUser, loading, login, logout, error, profileImage }}
+    <AuthContext.Provider value={{ accessToken, isAuthenticated, userId, loggedInUser, loading, login, logout, error, profileImage, setProfileImage }}
     >
       {children}
     </AuthContext.Provider>
